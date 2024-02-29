@@ -1,0 +1,146 @@
+programa ejercicio
+procesos
+  proceso juntarFlores
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+  proceso juntarPapeles
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+  fin
+  proceso izquierda
+  comenzar
+    repetir 3
+      derecha
+  fin
+  proceso escalonesFloresAbajo
+  variables
+    cant:numero 
+  comenzar
+    cant:=5
+    repetir 4
+      repetir cant
+        juntarFlores
+        mover 
+      juntarFlores
+      derecha
+      repetir cant
+        juntarFlores
+        mover
+      izquierda
+      cant:=cant-1
+    derecha
+  fin
+  proceso escalonesFloresArriba
+  variables
+    cant:numero
+  comenzar
+    cant:=2
+    repetir 4
+      repetir cant
+        juntarFlores
+        mover
+      juntarFlores
+      derecha
+      repetir cant
+        juntarFlores
+        mover
+      izquierda
+      cant:=cant+1
+  fin
+  proceso escalonesPapelesAbajo
+  variables
+    cant:numero
+  comenzar
+    cant:=5
+    repetir 4
+      repetir cant
+        juntarPapeles
+        mover
+      juntarPapeles
+      izquierda
+      repetir cant
+        juntarPapeles
+        mover
+      derecha
+      cant:=cant-1
+  fin
+  proceso escalonesPapelesArriba
+  variables
+    cant:numero
+  comenzar
+    cant:=2
+    repetir 4
+      repetir cant
+        juntarPapeles
+        mover
+      juntarPapeles
+      izquierda
+      repetir cant
+        juntarPapeles
+        mover
+      derecha
+      cant:=cant+1
+  fin
+areas
+  area:AreaPC(1,1,31,31)
+robots
+  robot florero
+  variables
+    id:numero
+  comenzar
+    RecibirMensaje(id,jefe)
+    escalonesFloresAbajo
+    izquierda
+    mover
+    derecha
+    BloquearEsquina(16,16)
+    mover
+    EnviarMensaje(id,jefe)
+    repetir 2
+      derecha
+    mover
+    LiberarEsquina(16,16)
+    escalonesFloresArriba
+  fin
+  robot papelero
+  variables
+    id:numero
+  comenzar
+    RecibirMensaje(id,jefe)
+    escalonesPapelesAbajo
+    mover
+    izquierda
+    BloquearEsquina(16,16)
+    mover
+    EnviarMensaje(id,jefe)
+    repetir 2
+      derecha
+    mover
+    LiberarEsquina(16,16)
+    escalonesPapelesArriba
+  fin
+  robot jefesito
+  variables
+    ganador:numero
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    RecibirMensaje(ganador,*)
+    si(ganador=1)
+      Informar(1)
+    sino
+      Informar(2)
+  fin
+variables
+  r1:florero r2:papelero jefe:jefesito
+comenzar
+  AsignarArea(r1,area)
+  AsignarArea(r2,area)
+  AsignarArea(jefe,area)
+  Iniciar(r1,1,1)
+  Iniciar(r2,31,1)
+  Iniciar(jefe,15,1)
+fin

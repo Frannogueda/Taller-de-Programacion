@@ -1,0 +1,86 @@
+programa ejercicio
+procesos
+  proceso moverYRecolectar
+  comenzar
+    repetir 10
+      mientras(HayFlorEnLaEsquina)
+        tomarFlor
+      mover
+  fin
+  proceso depositarFlores
+  comenzar
+    mientras(HayFlorEnLaBolsa)
+      depositarFlor
+  fin
+  proceso juntarFlores(ES cant:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      cant:=cant+1
+  fin
+areas
+  recorrido:AreaC(1,1,4,100)
+  cincuenta:AreaC(50,50,50,50)
+robots
+  robot reco
+  variables
+    aO,cO,id,ok,okey:numero
+  comenzar
+    aO:=PosAv
+    cO:=PosCa
+    RecibirMensaje(id,jefe)
+    repetir 10
+      moverYRecolectar
+      si(id=1)
+        EnviarMensaje(1,robot2)
+        EnviarMensaje(1,robot3)
+        RecibirMensaje(ok,robot2)
+        RecibirMensaje(ok,robot3)
+      sino
+        si(id=2)
+          EnviarMensaje(1,robot1)
+          EnviarMensaje(1,robot3)
+          RecibirMensaje(ok,robot1)
+          RecibirMensaje(ok,robot3)
+        sino
+          EnviarMensaje(1,robot1)
+          EnviarMensaje(1,robot2)
+          RecibirMensaje(ok,robot1)
+          RecibirMensaje(ok,robot2)
+    BloquearEsquina(50,50)
+    Pos(50,50)
+    depositarFlores
+    Pos(aO,cO)
+    LiberarEsquina(50,50)
+    EnviarMensaje(1,jefe)
+  fin
+  robot jefesito
+  variables
+    con,cant:numero
+  comenzar
+    EnviarMensaje(1,robot1)
+    EnviarMensaje(2,robot2)
+    EnviarMensaje(3,robot3)
+    repetir 3
+      RecibirMensaje(con,*)
+    Pos(50,50)
+    juntarFlores(cant)
+    Informar(cant)
+  fin
+variables
+  jefe:jefesito robot1,robot2,robot3:reco
+comenzar
+  AsignarArea(robot1,recorrido)
+  AsignarArea(robot2,recorrido)
+  AsignarArea(robot3,recorrido)
+  AsignarArea(robot1,cincuenta)
+  AsignarArea(robot2,cincuenta)
+  AsignarArea(robot3,cincuenta)
+  AsignarArea(jefe,recorrido)
+  AsignarArea(jefe,cincuenta)
+  Iniciar(robot1,1,1)
+  Iniciar(robot2,2,1)
+  Iniciar(robot3,3,1)
+  Iniciar(jefe,4,1)
+  {corregir el problema con el final de la ciudad}
+fin

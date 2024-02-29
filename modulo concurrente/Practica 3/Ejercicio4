@@ -1,0 +1,75 @@
+programa ejercicio
+areas
+  area:AreaPC(1,1,12,12)
+robots
+  robot r1
+  variables
+    ok:boolean id,aO,cO:numero
+  comenzar
+    ok:=V
+    aO:=PosAv
+    cO:=PosCa
+    RecibirMensaje(id,jefe)
+    mientras(ok=V)
+      BloquearEsquina(10,10)
+      Pos(10,10)
+      si(HayFlorEnLaEsquina)
+        tomarFlor
+      sino
+        ok:=F
+        Pos(aO,cO){vuelve si no hay mas flores}
+        LiberarEsquina(10,10)
+        EnviarMensaje(id,jefe){se envia 4 veces}
+      si(ok=V)
+        BloquearEsquina(11,11)
+        Pos(11,11)
+        LiberarEsquina(10,10)
+        depositarFlor
+        Pos(aO,cO)
+        LiberarEsquina(11,11)
+  fin
+  robot jefesito
+  variables 
+    termino,terminoU,idR:numero
+  comenzar
+    termino:=0
+    EnviarMensaje(1,robot1)
+    EnviarMensaje(2,robot2)
+    EnviarMensaje(3,robot3)
+    EnviarMensaje(4,robot4)
+    mientras (termino<4)
+      RecibirMensaje(idR,*)
+      si(idR=1)
+        termino:=termino+1
+        terminoU:=1
+      sino
+        si(idR=2)
+          termino:=termino+1
+          terminoU:=2
+        sino
+          si(idR=3)
+            termino:=termino+1
+            terminoU:=3
+          sino
+            si(idR=4)
+              termino:=termino+1
+              terminoU:=4
+    Informar(terminoU)
+    Pos(11,11)
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+variables
+  jefe:jefesito robot1,robot2,robot3,robot4:r1
+comenzar
+  AsignarArea(robot1,area)
+  AsignarArea(robot2,area)
+  AsignarArea(robot3,area)
+  AsignarArea(robot4,area)
+  AsignarArea(jefe,area)
+  Iniciar(jefe,1,1)
+  Iniciar(robot1,9,9)
+  Iniciar(robot2,9,10)
+  Iniciar(robot3,9,11)
+  Iniciar(robot4,9,12)
+fin

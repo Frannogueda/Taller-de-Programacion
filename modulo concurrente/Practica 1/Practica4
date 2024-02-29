@@ -1,0 +1,71 @@
+programa practica
+procesos
+  proceso limpiarFlores
+  comenzar
+    si(HayFlorEnLaEsquina)
+      mientras(HayFlorEnLaEsquina)
+        tomarFlor
+  fin
+  proceso limpiarPapeles
+  comenzar
+    si(HayPapelEnLaEsquina)
+      mientras(HayPapelEnLaEsquina)
+        tomarPapel
+  fin
+  proceso izquierda
+  comenzar
+    repetir 3
+      derecha
+  fin
+  proceso limpiarAvenida
+  comenzar
+    repetir 24
+      repetir 99
+        limpiarFlores
+        mover
+      Pos(PosAv+1,1)
+    repetir 99
+      limpiarFlores
+      mover
+  fin
+  proceso limpiarAvenida2
+  comenzar
+    repetir 24
+      repetir 99
+        limpiarPapeles
+        mover
+      Pos(PosAv+1,1)
+    repetir 99
+      limpiarFlores
+      mover
+  fin
+areas
+  area1:AreaC(1,1,25,100)
+  area2:AreaC(26,1,50,100)
+  area3:AreaC(51,1,75,100)
+  area4:AreaC(76,1,100,100)
+robots
+  robot r1
+  comenzar
+    limpiarFlores
+    limpiarAvenida
+    Pos(51,1)
+    limpiarAvenida
+  fin
+  robot r2
+  comenzar
+    limpiarPapeles
+    limpiarAvenida2
+    Pos(76,1)
+    limpiarAvenida2
+  fin
+variables
+  robi:r1 pepe:r2
+comenzar
+  AsignarArea(robi,area1)
+  AsignarArea(pepe,area2)
+  AsignarArea(robi,area3)
+  AsignarArea(pepe,area4)
+  Iniciar(robi,1,1)
+  Iniciar(pepe,26,1)
+fin

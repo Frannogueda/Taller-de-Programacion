@@ -1,0 +1,37 @@
+programa practica
+procesos
+  proceso tomarFlores(ES esqui : numero)
+  comenzar
+    repetir 99
+      si(HayFlorEnLaEsquina)
+        mientras(HayFlorEnLaEsquina)
+          tomarFlor
+      sino
+        esqui:=esqui+1
+      mover
+  fin
+areas
+  ciudad:AreaC(1,1,100,100)
+robots 
+  robot robot1
+  variables
+    cantEsquinasSF: numero 
+    floresDepo: numero
+  comenzar
+    cantEsquinasSF:=0
+    floresDepo:=0
+    repetir 3
+      tomarFlores(cantEsquinasSF)
+      mientras(HayFlorEnLaBolsa)
+        depositarFlor
+        floresDepo:=floresDepo+1
+      Informar(cantEsquinasSF)
+      Informar(floresDepo)
+      Pos(PosAv+2,1)
+  fin
+variables
+  r1:robot1
+comenzar
+  AsignarArea(r1,ciudad)
+  Iniciar(r1,1,1)
+fin

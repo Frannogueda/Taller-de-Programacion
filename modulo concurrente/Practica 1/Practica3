@@ -1,0 +1,54 @@
+programa ejercicio
+procesos
+  proceso moverte(E mov:numero)
+  comenzar
+    repetir mov
+      mover
+  fin
+  proceso derecho(E mov:numero)
+  comenzar
+    repetir mov
+      mover
+  fin
+  proceso izquierda
+  comenzar
+    repetir 3
+      derecha
+  fin
+  proceso escalon
+  variables
+    mov:numero
+  comenzar
+    mov:=1
+    repetir 4
+      moverte(mov)
+      derecha
+      derecho(mov)
+      izquierda
+      mov:=mov+1
+  fin
+areas
+  ciudad:AreaC(1,1,100,100)
+robots
+  robot r1
+  comenzar
+    escalon
+  fin
+  robot r2
+  comenzar
+    escalon
+  fin
+  robot r3
+  comenzar
+    escalon
+  fin
+variables
+  a:r1 b:r2 c:r3
+comenzar
+  AsignarArea(a,ciudad)
+  AsignarArea(b,ciudad)
+  AsignarArea(c,ciudad)
+  Iniciar(a,14,12)
+  Iniciar(b,10,17)
+  Iniciar(c,6,22)
+fin

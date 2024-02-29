@@ -1,0 +1,83 @@
+programa ejercicio
+areas
+  c:AreaPC(2,2,10,10)
+  a:AreaP(1,1,5,1)
+robots
+  robot r1
+  variables
+    id,Rid,cant,aO,cO,calle,avenida:numero ok,hayFlor:boolean
+  comenzar
+    cant:=0
+    aO:=PosAv
+    cO:=PosCa
+    ok:=V
+    hayFlor:=V
+    RecibirMensaje(id,jefe)
+    RecibirMensaje(calle,jefe)
+    RecibirMensaje(avenida,jefe)
+    mientras(hayFlor=V)
+      BloquearEsquina(avenida,calle)
+      Pos(avenida,calle)
+      si(HayFlorEnLaEsquina)
+        tomarFlor
+        cant:=cant+1
+        EnviarMensaje(id,jefe)
+        EnviarMensaje(ok,jefe)
+        EnviarMensaje(cant,jefe)
+      sino
+        ok:=F
+        hayFlor:=F
+        EnviarMensaje(id,jefe)
+        EnviarMensaje(ok,jefe)
+        EnviarMensaje(cant,jefe)
+      Pos(aO,cO)
+      LiberarEsquina(avenida,calle)
+  fin
+  robot jefesito
+  variables
+    ok: boolean calle,avenida,id,cantidad,max,idM:numero
+  comenzar
+    ok:=V
+    max:=0
+    EnviarMensaje(1,robot1)
+    EnviarMensaje(2,robot2)
+    EnviarMensaje(3,robot3)
+    EnviarMensaje(4,robot4)
+    Random(calle,2,10)
+    Random(avenida,2,10)
+    EnviarMensaje(calle,robot1)
+    EnviarMensaje(avenida,robot1)
+    EnviarMensaje(calle,robot2)
+    EnviarMensaje(avenida,robot2)
+    EnviarMensaje(calle,robot3)
+    EnviarMensaje(avenida,robot3)
+    EnviarMensaje(calle,robot4)
+    EnviarMensaje(avenida,robot4)
+    mientras(ok=V)
+      RecibirMensaje(id,*)
+      RecibirMensaje(ok,*)
+      RecibirMensaje(cantidad,*)
+      si(cantidad>max)
+        max:=cantidad
+        idM:=id
+    Informar(idM)
+  fin
+variables
+  robot1,robot2,robot3,robot4:r1 jefe:jefesito
+comenzar
+  AsignarArea(robot1,c)
+  AsignarArea(robot1,a)
+  AsignarArea(robot2,c)
+  AsignarArea(robot2,a)
+  AsignarArea(robot3,c)
+  AsignarArea(robot3,a)
+  AsignarArea(robot4,c)
+  AsignarArea(robot4,a)
+  AsignarArea(jefe,c)
+  AsignarArea(jefe,a)
+  Iniciar(jefe,1,1)
+  Iniciar(robot1,2,1)
+  Iniciar(robot2,3,1)
+  Iniciar(robot3,4,1)
+  Iniciar(robot4,5,1)
+fin

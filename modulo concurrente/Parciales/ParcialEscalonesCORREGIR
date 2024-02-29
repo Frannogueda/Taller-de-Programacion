@@ -1,0 +1,126 @@
+programa parcial
+procesos
+  proceso juntarPapeles(ES cantP:numero ES cantE:numero)
+  variables
+    aux:numero
+  comenzar
+    aux:=0
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      cantP:=cantP+1
+      aux:=aux+1
+    si(aux>0)
+      cantE:=cantE+1 
+  fin
+  proceso dejarPapeles(E cantP:numero)
+  variables
+    av,ca:numero
+  comenzar
+    av:=PosAv
+    ca:=PosCa
+    BloquearEsquina(99,99)
+    Pos(99,99)
+    repetir cantP
+      depositarPapel
+    Pos(av,ca)
+    LiberarEsquina(99,99)
+  fin
+  proceso izquierda
+  comenzar
+    repetir 3
+      derecha
+  fin
+  proceso Escalon(E lado:numero E ancho:numero ES cantP:numero ES cantE:numero)
+  comenzar
+    repetir lado
+      juntarPapeles(cantP,cantE)
+      mover
+    dejarPapeles(cantP)
+    derecha
+    repetir ancho
+      juntarPapeles(cantP,cantE)
+      mover
+    izquierda
+    dejarPapeles(cantP)
+  fin
+  proceso recoletarPapeles(E totalP:numero)
+  comenzar
+    Pos(99,99)
+    repetir totalP
+      tomarPapel
+  fin
+areas
+  a1:AreaP(2,1,18,12)
+  a2:AreaP(32,1,50,12)
+  a3:AreaP(62,1,78,12)
+  deposito:AreaC(99,99,99,99)
+  aJ:AreaP(1,1,1,1)
+robots
+  robot jefesito
+  variables
+    id,totalP,totalE,cantP,cantE:numero
+  comenzar
+    totalP:=0
+    totalE:=0
+    repetir 4
+      EnviarMensaje(1,robot1)
+      EnviarMensaje(2,robot2)
+      EnviarMensaje(3,robot3)
+      repetir 3
+        RecibirMensaje(id,*)
+    repetir 3
+      RecibirMensaje(id,*)
+      si(id=1)
+        RecibirMensaje(cantP,robot1)
+        totalP:=totalP+cantP
+        RecibirMensaje(cantE,robot1)
+        totalE:=totalE+cantE
+      sino
+        si(id=2)
+          RecibirMensaje(cantP,robot2)
+          totalP:=totalP+cantP
+          RecibirMensaje(cantE,robot2)
+          totalE:=totalE+cantE
+        sino
+          RecibirMensaje(cantP,robot3)
+          totalP:=totalP+cantP
+          RecibirMensaje(cantE,robot3)
+          totalE:=totalE+cantE
+    recoletarPapeles(totalP)
+    Informar(totalE)
+  fin
+  robot papelero
+  variables
+    totalP,totalE,cantP,cantE,lado,ancho,id:numero
+  comenzar
+    totalP:=0
+    totalE:=0
+    repetir 4
+      cantP:=0 
+      cantE:=0
+      RecibirMensaje(id,jefe)
+      Random(lado,1,3)
+      Random(ancho,2,4)
+      Escalon(lado,ancho,cantP,cantE)
+      totalP:=totalP+cantP
+      totalE:=totalE+cantE
+      EnviarMensaje(id,jefe){probar si anda sin esto}
+    EnviarMensaje(totalP,jefe)
+    EnviarMensaje(totalE,jefe)
+  fin
+variables
+  robot1,robot2,robot3:papelero jefe:jefesito
+comenzar
+  AsignarArea(robot1,a1)
+  AsignarArea(robot2,a2)
+  AsignarArea(robot3,a3)
+  AsignarArea(robot1,deposito)
+  AsignarArea(robot2,deposito)
+  AsignarArea(robot3,deposito)
+  AsignarArea(jefe,aJ)
+  AsignarArea(jefe,deposito)
+  Iniciar(robot1,2,1)
+  Iniciar(robot2,32,1)
+  Iniciar(robot3,62,1)
+  Iniciar(jefe,1,1)
+fin

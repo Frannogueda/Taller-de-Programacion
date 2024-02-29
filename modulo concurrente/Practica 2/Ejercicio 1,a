@@ -1,0 +1,46 @@
+programa practica
+procesos
+  proceso limpiarAvenida(ES cant:numero)
+  comenzar
+    repetir 9
+      si(HayFlorEnLaEsquina)
+        mientras(HayFlorEnLaEsquina)
+          tomarFlor
+          cant:=cant+1
+      mover
+    si(HayFlorEnLaEsquina)
+      mientras(HayFlorEnLaEsquina)
+        tomarFlor
+        cant:=cant+1
+  fin
+areas
+  area:AreaC(1,1,2,20)
+robots
+  robot r1
+  variables
+    cantF,F2:numero
+  comenzar
+    cantF:=0
+    limpiarAvenida(cantF)
+    RecibirMensaje(F2,rob2)
+    si(F2>cantF)
+      Informar(2)
+    sino
+      Informar(1)
+  fin
+  robot r2
+  variables
+    cantF:numero
+  comenzar
+    cantF:=0
+    limpiarAvenida(cantF)
+    EnviarMensaje(cantF,rob1)
+  fin
+variables
+  rob1:r1 rob2:r2
+comenzar
+  AsignarArea(rob1,area)
+  AsignarArea(rob2,area)
+  Iniciar(rob1,1,1)
+  Iniciar(rob2,2,11)
+fin

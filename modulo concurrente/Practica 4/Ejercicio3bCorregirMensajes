@@ -1,0 +1,59 @@
+programa ejercicio
+procesos
+  proceso juntarFlores (E cant:numero)
+  variables
+    cantJ:numero
+  comenzar
+    cantJ:=0
+    mientras(cantJ<cant)&(PosCa<100)
+      mientras(HayPapelEnLaEsquina)
+        tomarPapel
+        cantJ:=cantJ+1
+      mover
+  fin
+areas
+  area:AreaC(1,1,4,100)
+robots
+  robot r1
+  variables
+    id,ok,num:numero
+  comenzar
+    RecibirMensaje(id,jefe)
+    Random(num,1,5)
+    mientras(PosCa<100)
+      juntarFlores(num)
+    si(id=1)
+      EnviarMensaje(ok,robot2)
+      EnviarMensaje(ok,robot3)
+      RecibirMensaje(ok,robot2)
+      RecibirMensaje(ok,robo3)
+    sino
+      si(id=2)
+        EnviarMensaje(ok,robot1)
+        EnviarMensaje(ok,robot3)
+        RecibirMensaje(ok,robot1)
+        RecibirMensaje(ok,robot3)
+      sino
+        EnviarMensaje(ok,robot1)
+        EnviarMensaje(ok,robot2)
+        RecibirMensaje(ok,robot1)
+        RecibirMensaje(ok,robot2)
+  fin 
+  robot jefesito
+  comenzar
+    EnviarMensaje(1,robot1)
+    EnviarMensaje(2,robot2)
+    EnviarMensaje(3,robot3)
+  fin
+variables
+  jefe:jefesito robot1,robot2,robot3:r1
+comenzar
+  AsignarArea(jefe,area)
+  AsignarArea(robot1,area)
+  AsignarArea(robot2,area)
+  AsignarArea(robot3,area)
+  Iniciar(jefe,4,1)
+  Iniciar(robot1,1,1)
+  Iniciar(robot2,2,1)
+  Iniciar(robot3,3,1)
+fin

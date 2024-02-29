@@ -1,0 +1,61 @@
+programa ejercicio
+areas
+  area:AreaPC(1,1,11,100)
+robots
+  robot r1
+  variables
+    ok:boolean i,aO,cO,id:numero
+  comenzar
+    ok:=V
+    i:=1
+    RecibirMensaje(id,jefe)
+    mientras(ok=V)&(i<99)
+      aO:=PosAv
+      cO:=PosCa
+      BloquearEsquina(11,11)
+      Pos(11,11)
+      si(HayPapelEnLaEsquina)
+        tomarPapel
+        Pos(aO,cO)
+        LiberarEsquina(11,11)
+        i:=i+1 {cuantas cuadras hizo el robot}
+      sino
+        ok:=F
+        Pos(aO,cO)
+        LiberarEsquina(11,11)
+        EnviarMensaje(id,jefe)
+        EnviarMensaje(i,jefe)
+      si(ok=V)&(i<99)
+        mover
+  fin
+  robot jefesito
+  variables
+    cantidad,id,max,ganador:numero
+  comenzar
+    max:=0
+    EnviarMensaje(1,robot1)
+    EnviarMensaje(2,robot2)
+    EnviarMensaje(3,robot3)
+    EnviarMensaje(4,robot4)
+    repetir 4
+      RecibirMensaje(id,*)
+      RecibirMensaje(cantidad,*)
+      si(cantidad>max)
+        max:=cantidad
+        ganador:=id
+    Informar(ganador)
+  fin
+variables
+  jefe:jefesito robot1,robot2,robot3,robot4:r1
+comenzar
+  AsignarArea(robot1,area)
+  AsignarArea(robot2,area)
+  AsignarArea(robot3,area)
+  AsignarArea(robot4,area)
+  AsignarArea(jefe,area)
+  Iniciar(robot1,4,1)
+  Iniciar(robot2,6,1)
+  Iniciar(robot3,8,1)
+  Iniciar(robot4,10,1)
+  Iniciar(jefe,1,1)
+fin

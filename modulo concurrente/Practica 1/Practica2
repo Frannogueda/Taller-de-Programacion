@@ -1,0 +1,63 @@
+programa practica
+procesos
+  proceso izquierda
+  comenzar
+    repetir 3
+      derecha
+  fin
+areas
+  ciudad:AreaC(1,1,100,100)
+robots
+  robot r1
+  comenzar
+    repetir 20
+      si(HayPapelEnLaEsquina)
+        mientras(HayPapelEnLaEsquina)
+          tomarPapel
+      mover
+  fin
+  robot r2
+  comenzar
+    derecha
+    repetir 20
+      si(HayPapelEnLaEsquina)
+        mientras(HayPapelEnLaEsquina)
+          tomarPapel
+      mover
+  fin
+  robot r3
+  comenzar
+    repetir 2
+      derecha
+    repetir 20
+      si(HayPapelEnLaEsquina)
+        mientras(HayPapelEnLaEsquina)
+          tomarPapel
+      mover
+  fin
+  robot r4
+  comenzar
+    izquierda
+    repetir 20
+      si(HayPapelEnLaEsquina)
+        mientras(HayPapelEnLaEsquina)
+          tomarPapel
+      mover
+  fin
+variables
+  alfredo:r1
+  pepilla:r2
+  gordi:r3
+  roberto:r4
+comenzar
+  AsignarArea(alfredo,ciudad)
+  AsignarArea(pepilla,ciudad)
+  AsignarArea(gordi,ciudad)
+  AsignarArea(roberto,ciudad)
+  Iniciar(alfredo,10,10)
+  Iniciar(pepilla,10,30)
+  Iniciar(gordi,30,30)
+  Iniciar(roberto,30,10)
+  "A:se puede declarar el area en comun ya no hay tanto riesgo de colision entre robots"
+  "b:si existe que un robot llegue a un esquina y no haya salido el otro robot"
+fin

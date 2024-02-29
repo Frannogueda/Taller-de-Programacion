@@ -1,0 +1,127 @@
+programa parcial
+procesos
+  proceso recolectarFlores(E cant:numero)
+  variables
+    av,ca:numero
+  comenzar
+    av:=PosAv
+    ca:=PosCa
+    repetir cant
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      si(HayFlorEnLaEsquina)
+        tomarFlor
+      Pos(av,ca)
+      LiberarEsquina(50,50)
+  fin
+  proceso maximo(ES ganador:numero E cant:numero E cant2:numero E cant3:numero)
+  variables 
+    max:numero
+  comenzar
+    si(cant>cant2)&(cant>cant3)
+      ganador:=1
+    sino
+      si(cant2>cant)&(cant2>cant3)
+        ganador:=2
+      sino
+        ganador:=3
+  fin
+  proceso juntarFlores(ES cant:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      cant:=cant+1
+  fin
+  proceso cuadrado(E lado:numero ES cant:numero)
+  comenzar
+    repetir 4
+      repetir lado
+        juntarFlores(cant)
+        mover
+      derecha
+    Pos(PosAv,PosCa+lado+1)
+  fin
+  proceso depositarFlores(E cant:numero)
+  variables
+    av,ca:numero
+  comenzar
+    av:=PosAv
+    ca:=PosCa
+    repetir cant
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      si(HayFlorEnLaBolsa)
+        depositarFlor
+      Pos(av,ca)
+      LiberarEsquina(50,50)  
+  fin
+areas
+  ro1:AreaP(1,1,7,20)
+  ro2:AreaP(10,1,17,20)
+  ro3:AreaP(20,1,27,20)
+  deposito:AreaC(50,50,50,50)
+  aJefe:AreaP(100,100,100,100)
+robots 
+  robot jefesito
+  variables
+    total,total2,total3,lado,id,cant,cant2,cant3,ganador:numero
+  comenzar
+    total:=0
+    total2:=0
+    total3:=0
+    EnviarMensaje(1,robot1)
+    EnviarMensaje(2,robot2)
+    EnviarMensaje(3,robot3)
+    Random(lado,1,6)
+    EnviarMensaje(lado,robot1)
+    Random(lado,1,6)
+    EnviarMensaje(lado,robot2)
+    Random(lado,1,6)
+    EnviarMensaje(lado,robot3)
+    repetir 9
+      RecibirMensaje(id,*)
+      si(id=1)
+        RecibirMensaje(cant,robot1)
+        total:=total+cant
+        recolectarFlores(cant)
+      sino
+        si(id=2)
+          RecibirMensaje(cant2,robot2)
+          total2:=total2+cant2
+          recolectarFlores(cant2)
+        sino  
+          RecibirMensaje(cant3,robot3)
+          total3:=total3+cant3
+          recolectarFlores(cant3)
+    maximo(ganador,cant,cant2,cant3)
+    Informar(ganador)
+  fin
+  robot r1
+  variables
+    id,lado,cant:numero
+  comenzar
+    RecibirMensaje(id,jefe)
+    RecibirMensaje(lado,jefe)
+    repetir 3
+      cant:=0
+      cuadrado(lado,cant)
+      depositarFlores(cant)
+      EnviarMensaje(id,jefe)
+      EnviarMensaje(cant,jefe)
+  fin
+variables
+  robot1,robot2,robot3:r1 jefe:jefesito
+comenzar
+  AsignarArea(robot1,ro1)
+  AsignarArea(robot2,ro2)
+  AsignarArea(robot3,ro3)
+  AsignarArea(robot1,deposito)
+  AsignarArea(robot2,deposito)
+  AsignarArea(robot3,deposito)
+  AsignarArea(jefe,aJefe)
+  AsignarArea(jefe,deposito)
+  Iniciar(robot1,1,1)
+  Iniciar(robot2,10,1)
+  Iniciar(robot3,20,1)
+  Iniciar(jefe,100,100)
+fin

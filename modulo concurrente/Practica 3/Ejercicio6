@@ -1,0 +1,118 @@
+programa ejercicio
+procesos
+  proceso juntarFlores
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+  proceso lado(E lado:numero num:numero)
+  comenzar
+    repetir lado
+      si(num=1)
+        juntarFlores
+        mover
+      sino
+        si(num=2)
+          juntarPapeles
+          mover
+        sino
+          juntarFyP
+          mover
+    derecha
+  fin
+  proceso juntarPapeles
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+  fin
+  proceso juntarFyP
+  comenzar
+    juntarPapeles
+    juntarFlores
+  fin
+  proceso restante(E num:numero E es:numero)
+  comenzar
+    repetir num
+      si(es=1)
+        juntarFlores
+        mover
+      sino
+        si(es=2)
+          juntarPapeles
+          mover
+        sino
+          juntarFyP
+          mover
+    derecha
+    repetir num
+      si(es=1)
+        juntarFlores
+        mover
+      sino 
+        si(es=2)
+          juntarPapeles
+          mover
+        sino
+          JuntarFyP
+          mover
+  fin
+areas
+  area:AreaPC(1,1,50,50)
+robots
+  robot r1
+  comenzar
+    lado(6,1)
+    repetir 2
+      juntarFlores
+      mover
+    BloquearEsquina(5,8)
+    mover
+    juntarFlores
+    mover
+    LiberarEsquina(5,8)
+    restante(2,1)
+    BloquearEsquina(8,5)
+    mover
+    juntarFlores
+    mover
+    LiberarEsquina(8,5)
+    repetir 2
+      juntarFlores
+      mover
+    derecha
+    lado(6,1)
+    {faltan msj al jefe}
+  fin
+  robot r2
+  comenzar
+    repetir 3
+      juntarFyP
+      mover
+    BloquearEsquina(5,8)
+    mover
+    juntarFyP
+    mover
+    LiberarEsquina(5,8)
+    restante(7,3)
+    BloquearEsquina(9,15)
+    mover
+    juntarFyP
+    mover
+    repetir 3
+      juntarFyP
+      mover
+    {calle 5,avenida 8}
+    {avenida 15,calle 9}
+  fin
+  robot r3
+  comenzar
+    cuadrante(7)
+    {calle 15,avenida 9}
+    {calle 9,avenida 15}
+  fin
+variables 
+  robot1:r1 
+comenzar 
+  AsignarArea(robot1,area)
+  Iniciar(robot1,2,2)
+fin

@@ -1,0 +1,116 @@
+programa ejercicio
+procesos
+  proceso limpiarCallePapel(ES cant:numero)
+  comenzar
+    derecha
+    repetir 9
+      juntarPapeles(cant)
+      mover
+    juntarPapeles(cant)
+  fin
+  proceso limpiarCallePapel2(ES cant:numero)
+  comenzar
+    repetir 9
+      juntarPapeles(cant)
+      mover
+    juntarPapeles(cant)
+  fin
+  proceso limpiarCalleFlores(ES cant:numero)
+  comenzar
+    derecha
+    repetir 9 
+      juntarFlores(cant)
+      mover
+    juntarFlores(cant)
+  fin
+  proceso limpiarCalleFlores2(ES cant:numero)
+  comenzar
+    repetir 9
+      juntarFlores(cant)
+      mover
+    juntarFlores(cant)
+  fin
+  proceso juntarPapeles(ES cant:numero)
+  comenzar
+    si(HayPapelEnLaEsquina)
+      mientras(HayPapelEnLaEsquina)  
+        tomarPapel
+        cant:=cant+1
+  fin
+  proceso juntarFlores(ES cant:numero)
+  comenzar
+    si(HayFlorEnLaEsquina)
+      mientras(HayFlorEnLaEsquina)
+        tomarFlor
+        cant:=cant+1
+  fin
+areas
+  area1:AreaP(1,1,40,1)
+  area2:AreaP(1,5,40,5)
+robots
+  robot A1
+  variables
+    ok,ok2:boolean cantidad:numero
+  comenzar
+    ok:=V 
+    ok2:=V
+    cantidad:=0
+    limpiarCallePapel(cantidad)
+    EnviarMensaje(ok,robot2)
+    EnviarMensaje(cantidad,robot2)
+    Pos(21,1)
+    limpiarCallePapel2(cantidad)
+    EnviarMensaje(ok2,robot2)
+    EnviarMensaje(cantidad,robot2)
+  fin
+  robot A2
+  variables
+    ok,ok2:boolean total:numero
+  comenzar
+    RecibirMensaje(ok,robot1)
+    RecibirMensaje(total,robot1)
+    limpiarCallePapel(total)
+    Pos(31,1)
+    RecibirMensaje(ok2,robot1)
+    RecibirMensaje(total,robot1)
+    limpiarCallePapel2(total)
+  fin
+  robot B1
+  variables
+    ok,ok2:boolean cantidad:numero
+  comenzar
+    ok:=V
+    ok2:=V
+    cantidad:=0
+    limpiarCalleFlores(cantidad)
+    EnviarMensaje(ok,robot4)
+    EnviarMensaje(cantidad,robot4)
+    Pos(21,5)
+    limpiarCalleFlores2(cantidad)
+    EnviarMensaje(ok2,robot4)
+    EnviarMensaje(cantidad,robot4)
+  fin
+  robot B2
+  variables
+    ok:boolean total:numero
+  comenzar
+    RecibirMensaje(ok,robot3)
+    RecibirMensaje(total,robot3)
+    limpiarCalleFlores(total)
+    Pos(31,5)
+    RecibirMensaje(ok,robot3)
+    RecibirMensaje(total,robot3)
+    limpiarCalleFlores2(total)
+  fin
+variables
+  robot1:A1 robot2:A2 robot3:B1 robot4:B2
+comenzar
+  AsignarArea(robot1,area1)
+  AsignarArea(robot2,area1)
+  AsignarArea(robot3,area2)
+  AsignarArea(robot4,area2)
+  Iniciar(robot1,1,1)
+  Iniciar(robot2,11,1)
+  Iniciar(robot3,1,5)
+  Iniciar(robot4,11,5)
+fin

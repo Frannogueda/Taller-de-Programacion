@@ -1,0 +1,104 @@
+programa ejercicio
+procesos
+  proceso tomarFlores(ES cantE:numero ES cantF:numero ES c:numero)
+  comenzar
+    cantE:=0
+    c:=PosCa
+    mientras(cantE<5)&(cantF<10)&(c<100)
+      mientras(HayFlorEnLaEsquina)&(cantF<10)&(c<100)
+        tomarFlor
+        cantF:=cantF+1
+      si(cantF<10)
+        mover
+        c:=PosCa
+        cantE:=cantE+1
+  fin
+  proceso juntarFlores(ES cant:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      cant:=cant+1
+  fin
+  proceso Depositarflores
+  comenzar
+    mientras(HayFlorEnLaBolsa)
+      depositarFlor
+  fin
+areas
+  reco:AreaP(3,1,4,100)
+  deposito:AreaC(10,10,10,10)
+  boss:AreaP(1,5,1,5)
+robots
+  robot reco
+  variables
+    cO,aO,cantFlor,cantEsqui,id:numero
+  comenzar
+    cO:=PosCa
+    aO:=PosAv
+    cantFlor:=0
+    mover
+    RecibirMensaje(id,consumi)
+    mientras(cO<100)
+      tomarFlores(cantEsqui,cantFlor,cO)
+      si(cO<100)
+        si(cantFlor=10)
+          cantFlor:=0
+          BloquearEsquina(10,10)
+          Pos(10,10)
+          Depositarflores
+          Pos(aO,cO)
+          LiberarEsquina(10,10)
+          EnviarMensaje(id,consumi)
+          EnviarMensaje(1,consumi)
+        sino 
+          BloquearEsquina(10,10)
+          Pos(10,10)
+          Depositarflores
+          Pos(aO,cO)
+          LiberarEsquina(10,10)
+          EnviarMensaje(id,consumi)
+          EnviarMensaje(1,consumi)   
+    EnviarMensaje(0,consumi){se le envia un 0 para dar a entender que termino el recorrido el recolector}
+  fin
+  robot consu
+  variables
+    ter1,ter2,id,ok,cant:numero
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    ter1:=1
+    ter2:=1
+    mientras(ter1<>0)&(ter2<>0)
+      RecibirMensaje(id,*)
+      si(id=1)
+        RecibirMensaje(ok,r1)
+        si(ok=0)
+          ter1:=0
+      sino
+        RecibirMensaje(ok,r2)
+        si(ok=0)
+          ter2:=0
+    si(ter1=0)
+      RecibirMensaje(ok,r2)
+      mientras(ok<>0)
+        RecibirMensaje(ok,r2)
+    sino
+      RecibirMensaje(ok,r1)
+      mientras(ok<>0)
+        RecibirMensaje(ok,r1)
+    juntarFlores(cant)
+    Informar(cant)
+  fin
+variables
+  r1,r2:reco consumi:consu
+comenzar
+  AsignarArea(r1,reco)
+  AsignarArea(r1,deposito)
+  AsignarArea(r2,reco)
+  AsignarArea(r2,deposito)
+  AsignarArea(consumi,boss)
+  AsignarArea(consumi,deposito)
+  Iniciar(r1,3,1)
+  Iniciar(r2,4,1)
+  Iniciar(consumi,1,5)
+fin

@@ -1,0 +1,113 @@
+programa parcial
+procesos
+  proceso juntarFlores
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+  proceso juntarFloresTeam(ES total:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      total:=total+1
+  fin
+  proceso lado(E lado:numero)
+  comenzar
+    repetir lado
+      juntarFlores
+      mover
+    juntarFlores
+    derecha
+    repetir lado
+      mover
+      juntarFlores
+  fin
+  proceso depositarFlores
+  comenzar
+    mientras(HayFlorEnLaBolsa)
+      depositarFlor
+  fin
+areas
+  area:AreaC(1,1,30,30)
+robots
+  robot r1
+  variables
+    id,av,ca:numero
+  comenzar
+    RecibirMensaje(id,jefe)
+    lado(9)
+    av:=PosAv
+    ca:=PosCa
+    si(id=1)
+      EnviarMensaje(V,robot2)
+    sino
+      EnviarMensaje(V,robot4)
+    BloquearEsquina(20,20)
+    Pos(20,20)
+    depositarFlores
+    Pos(av,ca)
+    EnviarMensaje(V,jefe)
+    LiberarEsquina(20,20)
+  fin
+  robot r2
+  variables
+    id,av,ca:numero ok:boolean
+  comenzar
+    repetir 2
+      derecha
+    RecibirMensaje(id,jefe)
+    si(id=2)
+      RecibirMensaje(ok,robot1)
+    sino
+      RecibirMensaje(ok,robot3)
+    lado(9)
+    av:=PosAv
+    ca:=PosCa
+    BloquearEsquina(20,20)
+    Pos(20,20)
+    depositarFlores
+    Pos(av,ca)
+    EnviarMensaje(1,jefe)
+    LiberarEsquina(20,20)
+  fin
+  robot jefesito
+  variables
+    id,total1,total2:numero
+  comenzar
+    EnviarMensaje(1,robot1)
+    EnviarMensaje(2,robot2)
+    EnviarMensaje(3,robot3)
+    EnviarMensaje(4,robot4)
+    repetir 4
+      RecibirMensaje(id,*)
+      si(id=1)
+        juntarFloresTeam(total1)
+      sino
+        si(id=2)
+          juntarFloresTeam(total1)
+        sino
+          si(id=3)
+            juntarFloresTeam(total2)
+          sino
+            juntarFloresTeam(total2)
+    si(total1>total2)
+      Informar(1)
+      Informar(total1)
+    sino
+      Informar(2)
+      Informar(total2)
+  fin
+variables
+  robot1,robot3:r1 robot2,robot4:r2 jefe:jefesito
+comenzar
+  AsignarArea(robot1,area)
+  AsignarArea(robot2,area)
+  AsignarArea(robot3,area)
+  AsignarArea(robot4,area)  
+  AsignarArea(jefe,area)
+  Iniciar(robot1,1,1)
+  Iniciar(robot2,11,10)
+  Iniciar(robot3,13,1)
+  Iniciar(robot4,23,10)
+  Iniciar(jefe,30,1)
+fin

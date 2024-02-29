@@ -1,0 +1,109 @@
+programa ejercicio
+procesos
+  proceso juntarFlores (ES cant:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      cant:=cant+1
+  fin
+  proceso juntarPapeles(ES cant:numero)
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      cant:=cant+1
+  fin
+areas
+  area:AreaC(1,1,100,100)
+robots
+  robot rojo
+  variables
+    av,cant,id:numero 
+  comenzar
+    av:=PosAv
+    cant:=0
+    RecibirMensaje(id,jefe)
+    repetir 96
+      juntarFlores(cant)
+      mover
+    BloquearEsquina(av,98)
+    mover
+    juntarFlores(cant)
+    BloquearEsquina(av,99)
+    mover
+    LiberarEsquina(av,98)
+    juntarFlores(cant)
+    mover
+    LiberarEsquina(av,99)
+    juntarFlores(cant)
+    EnviarMensaje(id,jefe)
+    EnviarMensaje(cant,jefe)
+  fin
+  robot azul
+  variables
+    id,cant,ca:numero
+  comenzar
+    derecha
+    cant:=0
+    RecibirMensaje(id,jefe)
+    ca:=PosCa
+    juntarPapeles(cant)
+    BloquearEsquina(2,ca)
+    mover
+    juntarPapeles(cant)
+    BloquearEsquina(3,ca)
+    mover
+    LiberarEsquina(2,ca)
+    juntarPapeles(cant)
+    mover
+    LiberarEsquina(3,ca)
+    repetir 96
+      juntarPapeles(cant)
+      mover
+    EnviarMensaje(id,jefe)
+    EnviarMensaje(cant,jefe)
+  fin
+  robot jefesito
+  variables
+    id,cant,cantTotalRojos,cantTotalAzul:numero
+  comenzar
+    cantTotalAzul:=0
+    cantTotalRojos:=0
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)   
+    EnviarMensaje(3,a1)
+    EnviarMensaje(4,a2)
+    repetir 4
+      RecibirMensaje(id,*)
+      si(id=1)
+        RecibirMensaje(cant,r1)
+        cantTotalRojos:=cantTotalRojos+cant
+      sino
+        si(id=2)
+          RecibirMensaje(cant,r2)
+          cantTotalRojos:=cantTotalRojos+cant
+        sino
+          si(id=3)
+            RecibirMensaje(cant,a1)
+            cantTotalAzul:=cantTotalAzul+cant
+          sino
+            RecibirMensaje(cant,a2)
+            cantTotalAzul:=cantTotalAzul+cant
+    si(cantTotalRojos>cantTotalAzul)
+      Informar(1)
+    sino
+      Informar(2)      
+  fin
+variables
+  r1,r2:rojo a1,a2:azul jefe:jefesito
+comenzar
+  AsignarArea(r1,area)
+  AsignarArea(r2,area)
+  AsignarArea(a1,area)
+  AsignarArea(a2,area)
+  AsignarArea(jefe,area)
+  Iniciar(r1,2,1)
+  Iniciar(r2,3,1)
+  Iniciar(a1,1,98)
+  Iniciar(a2,1,99)
+  Iniciar(jefe,1,1)
+fin

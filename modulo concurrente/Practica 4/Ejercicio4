@@ -1,0 +1,117 @@
+programa ejercicio
+procesos
+  proceso RecolectarFlores(E avJ:numero E caJ:numero E avO:numero E caO:numero)
+  comenzar
+    BloquearEsquina(avJ,caJ)
+    Pos(avJ,caJ)
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+    Pos(avO,caO)
+    LiberarEsquina(avJ,caJ)
+  fin
+  proceso RecolectarPapeles(E avJ:numero E caJ:numero E avO:numero E caO:numero)
+  comenzar
+    BloquearEsquina(avJ,caJ)
+    Pos(avJ,caJ)
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+    Pos(avO,caO)
+    LiberarEsquina(avJ,caJ)
+  fin
+  proceso vaciarBolsa(E avJ:numero E caJ:numero E avO:numero E caO:numero)
+  comenzar
+    BloquearEsquina(avJ,caJ)
+    Pos(avJ,caJ)
+    mientras(HayFlorEnLaBolsa)
+      depositarFlor
+    mientras(HayPapelEnLaBolsa)
+      depositarPapel
+    Pos(avO,caO)
+    LiberarEsquina(avJ,caJ)
+  fin
+areas
+  Jarea:AreaP(1,1,1,1)
+  local:AreaP(2,1,3,1)
+  cuadrante:AreaPC(2,2,100,100)
+robots
+  robot jefesito
+  variables
+    id,tarea,tarea1,avenida,avenida1,calle,calle1,ok:numero
+  comenzar
+    EnviarMensaje(1,robot1)
+    EnviarMensaje(2,robot2){necesito las ids?}
+    Random(tarea,1,4){primer robot}
+    Random(tarea1,1,4){segundo robot}
+    mientras(tarea<>4)&(tarea1<>4)
+      Random(avenida,2,100)
+      Random(avenida1,2,100)
+      Random(calle,2,100)
+      Random(calle1,2,100)
+      EnviarMensaje(tarea,robot1)
+      EnviarMensaje(avenida,robot1)
+      EnviarMensaje(calle,robot1)
+      EnviarMensaje(tarea1,robot2)
+      EnviarMensaje(avenida1,robot2)
+      EnviarMensaje(calle1,robot2)
+      RecibirMensaje(ok,*)
+      RecibirMensaje(ok,*){dudoso}
+      Random(tarea,1,4)
+      Random(tarea1,1,4)
+    si(tarea=4)
+      EnviarMensaje(tarea,robot1)
+      mientras(tarea1<>4)
+        Random(avenida1,2,100)
+        Random(calle1,2,100)
+        EnviarMensaje(tarea1,robot2)
+        EnviarMensaje(avenida1,robot2)
+        EnviarMensaje(calle1,robot2)
+        RecibirMensaje(ok,robot2)
+        Random(tarea1,1,4)
+      EnviarMensaje(tarea1,robot2)
+    sino
+      EnviarMensaje(tarea1,robot2)
+      mientras(tarea<>4)
+        Random(avenida,2,100)
+        Random(calle,2,100)
+        EnviarMensaje(tarea,robot1)
+        EnviarMensaje(avenida,robot1)
+        EnviarMensaje(calle,robot1)
+        RecibirMensaje(ok,robot1)
+        Random(tarea,1,4)
+      EnviarMensaje(tarea,robot1) 
+  fin
+  robot r1
+  variables
+    id,tarea,avenida,calle,avO,caO:numero
+  comenzar
+    avO:=PosAv
+    caO:=PosCa
+    RecibirMensaje(id,jefe)
+    RecibirMensaje(tarea,jefe)
+    mientras(tarea<>4)
+      RecibirMensaje(avenida,jefe)
+      RecibirMensaje(calle,jefe)
+      si(tarea=1)
+        RecolectarFlores(avenida,calle,avO,caO)
+        EnviarMensaje(id,jefe)
+      sino
+        si(tarea=2)
+          RecolectarPapeles(avenida,calle,avO,caO)
+          EnviarMensaje(id,jefe)
+        sino
+          vaciarBolsa(avenida,calle,avO,caO)
+          EnviarMensaje(id,jefe)
+      RecibirMensaje(tarea,jefe)
+  fin
+variables
+  jefe:jefesito robot1,robot2:r1
+comenzar
+  AsignarArea(jefe,Jarea)
+  AsignarArea(robot1,local)
+  AsignarArea(robot1,cuadrante)
+  AsignarArea(robot2,local)
+  AsignarArea(robot2,cuadrante)
+  Iniciar(jefe,1,1)
+  Iniciar(robot1,2,1)
+  Iniciar(robot2,3,1)
+fin

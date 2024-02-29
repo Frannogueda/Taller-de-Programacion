@@ -1,0 +1,89 @@
+programa ejercicio
+procesos
+  proceso juntarPapeles(ES cant:numero)
+  variables 
+    cant:numero
+  comenzar
+    cant:=0
+    mientras(cant<5)&(PosCa<100){modificar esto }
+      mientras(HayPapelEnLaEsquina)&(cant<5)
+        tomarPapel
+        cant:=cant+1
+      mover
+  fin
+  proceso depositarPapeles
+  comenzar
+    repetir 5
+      depositarPapel
+  fin
+  proceso recolectarPapeles(ES cant:numero E num:numero)
+  variables
+    aux:numero
+  comenzar
+    mientras(HayPapelEnLaEsquina)&(aux<num)
+      tomarPapel
+      aux:=aux+1
+    si(aux=num)
+      cant:=aux
+    sino
+      repetir aux
+        depositarPapel
+      cant:=0
+  fin
+areas
+  area:AreaC(1,1,51,100)
+robots
+  robot produc
+  variables
+    cant,aO,cO:numero
+  comenzar
+    mientras(PosCa<100)
+      juntarPapeles(cant)
+      mientras(cant<5)&(PosCa<100)
+        juntarPapeles(cant)
+      si(PosCa<100)&(cant=5)
+        aO:=PosAv
+        cO:=PosCa
+        BloquearEsquina(50,50)
+        Pos(50,50)
+        depositarPapeles
+        Pos(aO,cO)
+        LiberarEsquina(50,50)
+  fin
+  robot consu
+  variables
+    intento,num,aO,cO,cant:numero ok:boolean
+  comenzar
+    intento:=0
+    ok:=F
+    aO:=PosAv
+    cO:=PosCa
+    mientras(intento<8)
+      Random(num,2,5){este numero no cambia hasta encontrar la cantidad de flores}
+      mientras(ok=F)&(intento<8)
+        BloquearEsquina(50,50)
+        Pos(50,50)
+        recolectarPapeles(cant,num)
+        si(cant=0)
+          intento:=intento+1
+        sino
+          intento:=0
+          ok:=V
+          Pos(aO,cO)
+          repetir num
+            depositarPapel 
+        Pos(aO,cO)
+        LiberarEsquina(50,50)
+  fin
+variables
+  r1,r2:produc c1,c2:consu
+comenzar
+  AsignarArea(r1,area)
+  AsignarArea(r2,area)
+  AsignarArea(c1,area)
+  AsignarArea(c2,area)
+  Iniciar(r1,5,1)
+  Iniciar(r2,10,1)
+  Iniciar(c1,11,1)
+  Iniciar(c2,12,1)
+fin

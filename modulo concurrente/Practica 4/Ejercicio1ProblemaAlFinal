@@ -1,0 +1,105 @@
+programa ejercicio
+procesos 
+  proceso juntarFlores
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+  proceso dejarFlores
+  comenzar
+    mientras(HayFlorEnLaBolsa)&(PosCa<100)
+      depositarFlor
+      mover
+  fin
+areas
+  ser:AreaP(100,100,100,100)
+  cli:AreaPC(1,1,3,100)
+robots
+  robot clientes
+  variables
+    i,cantFlores,id,aAc,cAc,confir:numero
+  comenzar
+    RecibirMensaje(id,server)
+    mientras(PosCa<100)
+      aAc:=PosAv
+      cAc:=PosCa+1
+      si(cAc<100)
+        Random(cantFlores,1,4)
+        EnviarMensaje(id,server)
+        EnviarMensaje(cantFlores,server)
+        EnviarMensaje(aAc,server)
+        EnviarMensaje(cAc,server)
+        RecibirMensaje(confir,server){okey de los papeles que pidio}
+        mover
+        juntarFlores
+        Pos(aAc,cAc-1)
+        dejarFlores
+    EnviarMensaje(id,serve)
+    EnviarMensaje(0,server)
+  fin
+  robot servidor
+  variables
+    ok:boolean id,cantF,av,ca,termino:numero
+  comenzar
+    ok:=V
+    termino:=0
+    EnviarMensaje(1,cliente1)
+    EnviarMensaje(2,cliente2)
+    EnviarMensaje(3,cliente3)
+    mientras(termino<3)
+      RecibirMensaje(id,*)
+      si(id=1)
+        RecibirMensaje(cantF,cliente1)
+        si(cantF<>0)
+          RecibirMensaje(av,cliente1)
+          RecibirMensaje(ca,cliente1)
+          Pos(av,ca)
+          repetir cantF
+            depositarFlor
+          Pos(100,100)
+          EnviarMensaje(1,cliente1)
+        sino
+          termino:=termino+1
+      sino
+        si(id=2)
+          RecibirMensaje(cantF,cliente2)
+          si(cantF<>0)
+            RecibirMensaje(av,cliente2)
+            RecibirMensaje(ca,cliente2)
+            Pos(av,ca)
+            repetir cantF
+              depositarFlor
+            Pos(100,100)
+            EnviarMensaje(1,cliente2)
+          sino
+            termino:=termino+1
+        sino
+          RecibirMensaje(cantF,cliente3)
+          si(cantF<>0)
+            RecibirMensaje(av,cliente3)
+            RecibirMensaje(ca,cliente3)
+            Pos(av,ca)
+            repetir cantF
+              depositarFlor
+            Pos(100,100)
+            EnviarMensaje(1,cliente3)
+          sino
+            termino:=termino+1
+  fin
+variables
+  cliente1,cliente2,cliente3:clientes 
+  server:servidor
+comenzar
+  AsignarArea(cliente1,cli)
+  AsignarArea(cliente2,cli)
+  AsignarArea(cliente3,cli)
+  AsignarArea(server,cli)
+  AsignarArea(server,ser)
+  Iniciar(cliente1,1,1)
+  Iniciar(cliente2,2,1)
+  Iniciar(cliente3,3,1)
+  Iniciar(server,100,100)
+  {problema cuando llega al limite el server}
+  {algunas veces da error por que no deposita bien las flores. problemas con contadores?}
+  
+fin

@@ -1,0 +1,71 @@
+programa practica
+procesos
+  proceso izquierda
+  comenzar
+    repetir 3
+      derecha
+  fin
+  proceso floresYpapel(ES cant:numero)
+  variables 
+    cantP,cantF:numero
+  comenzar
+    cantP:=0
+    cantF:=0
+    si(HayPapelEnLaEsquina)
+      mientras(HayPapelEnLaEsquina)
+        tomarPapel
+        cantP:=cantP+1
+    si(HayFlorEnLaEsquina)
+      mientras(HayFlorEnLaEsquina)
+        tomarFlor
+        cantF:=cantF+1
+    si(cantF>cantP)
+      cant:=cant+1
+  fin
+  proceso Escalones(E ancho:numero E alto:numero ES cant:numero)
+  comenzar
+    repetir 4
+      repetir alto
+        floresYpapel(cant)
+        mover
+      derecha
+      repetir ancho
+        floresYpapel(cant)
+        mover
+      izquierda
+  fin
+areas
+  ciudad:AreaC(1,1,50,50)
+robots
+  robot r1
+  variables
+    ancho,alto,cantFloresE:numero
+  comenzar
+    cantFloresE:=0
+    ancho:=1
+    Random(alto,1,5)
+    Escalones(ancho,alto,cantFloresE)
+    EnviarMensaje(cantFloresE,jefe)
+  fin
+  robot jefesito
+  variables
+    total,suma:numero
+  comenzar
+    total:=0
+    repetir 3
+      RecibirMensaje(suma,*)
+      total:=total+suma
+    Informar(total)
+  fin
+variables
+  rob1,rob2,rob3:r1 jefe:jefesito
+comenzar
+  AsignarArea(rob1,ciudad)
+  AsignarArea(rob2,ciudad)
+  AsignarArea(rob3,ciudad)
+  AsignarArea(jefe,ciudad)
+  Iniciar(rob1,2,1)
+  Iniciar(rob2,7,1)
+  Iniciar(rob3,12,1)
+  Iniciar(jefe,1,1)
+fin

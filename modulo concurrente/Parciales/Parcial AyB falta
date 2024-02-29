@@ -1,0 +1,71 @@
+programa parcial 
+procesos 
+areas
+robots
+  robot a1
+  variables
+  comenzar
+    mitad(cant)
+    EnviarMensaje(1,robot2)
+    depositarFlores(cant)
+    EnviarMensaje(1,jefe)
+    EnviarMensaje(cant,jefe)
+  fin
+  robot a2
+  variables
+  comenzar
+    cant:=0
+    mitad(cant)
+    EnviarMensaje(2,robot4)
+    depositarFlores(cant)
+    EnviarMensaje(2,jefe)
+    EnviarMensaje(cant,jefe)
+  fin
+  robot b
+  comenzar
+    RecibirMensaje(id,*)
+    si(id=1)
+      repetir 2
+        derecha
+      mitad(cant)
+      depositarFlores(cant)
+      EnviarMensaje(1,jefe)
+      EnviarMensaje(cant,jefe)
+    sino
+      repetir 2
+        derecha
+      mitad(cant)
+      depositarFlores(cant)
+      EnviarMensaje(2,jefe)
+      EnviarMensaje(cant,jefe)
+  fin
+  robot jefesito
+  comenzar
+    repetir 2
+      RecibirMensaje(id,*)
+      si(id=1)
+        RecibirMensaje(cant,robot1)
+        totalA:=totalA+cant
+        recolectar(cant)
+      sino
+        RecibirMensaje(cant,robot2)
+        totalB:=totalB+cant
+        recolectar(cant)
+    repetir 2
+      RecibirMensaje(id,*)
+      si(id=1)
+        RecibirMensaje(cant,robot3)
+        totalA:=totalA+cant
+        recolectar(cant)
+      sino
+        RecibirMensaje(cant,robot4)
+        totalB:=totalB+cant
+        recolectar(cant)   
+    si(totalA>totalB)
+      Informar(1)
+    sino
+      Informar(2)
+  fin
+variables 
+comenzar
+fin

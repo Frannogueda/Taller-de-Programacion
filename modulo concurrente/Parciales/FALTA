@@ -1,0 +1,73 @@
+programa parcial
+procesos
+  proceso juntarFlores(ES cant:numero)
+  comenzar
+    derecha
+    repetir 2
+      juntarflores(cant)
+      mover
+    BloquearEsquina(PosAv+1,PosCa+1)
+    mover
+    
+  fin
+areas
+robots
+  robot Florero
+  variables
+    id,cant:numero
+  comenzar
+    cant:=0
+    RecibirMensaje(id,jefe)
+    juntarFlores(cant)
+    EnviarMensaje(id,jefe)
+    EnviarMensaje(cant,jefe)
+  fin
+  robot papelero
+  variables
+    id,cant:numero
+  comenzar
+    cant:=0
+    RecibirMensaje(id,jefe)
+    juntarPapeles(cant)
+    EnviarMensaje(id,jefe)
+    EnviarMensaje(cant,jefe)
+  fin
+  robot jefesito
+  variables
+    min,minR,id,cant:numero
+  comenzar
+    EnviarMensaje(1,robot1)
+    EnviarMensaje(2,robot2)
+    EnviarMensaje(3,robot3)
+    EnviarMensaje(4,robot4)
+    min:=999
+    minR:=0
+    repetir 4
+      RecibirMensaje(id,*)
+      si(id=1)
+        RecibirMensaje(cant,robot1)
+        si(cant<min)
+          min:=cant
+          minR:=1
+      sino
+        si(id=2)
+          RecibirMensaje(cant,robot2)
+          si(cant<min)
+            min:=cant
+            minR:=2
+        sino
+          si(id=3)
+            RecibirMensaje(cant,robot3)
+            si(cant<min)
+              min:=cant
+              minR:=3
+          sino
+            RecibirMensaje(cant,robot4)
+            si(cant<min)
+              min:=cant
+              minR:=4
+    Informar(minR)
+  fin
+variables
+comenzar
+fin

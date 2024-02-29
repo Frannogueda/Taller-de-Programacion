@@ -1,0 +1,37 @@
+programa cua
+procesos
+  proceso cuadrante(E lado:numero)
+  comenzar
+    repetir 2
+      repetir lado
+        mover
+      derecha
+      repetir lado
+        mover
+      derecha
+  fin
+areas
+  area:AreaPC(1,1,100,100)
+robots
+  robot r1
+  comenzar
+    cuadrante(6)
+  fin
+  robot r2
+  comenzar
+    cuadrante(10)
+  fin
+  robot r3
+  comenzar
+    cuadrante(7)
+  fin
+variables
+  ro1:r1 ro2:r2 ro3:r3
+comenzar
+  AsignarArea(ro1,area)
+  AsignarArea(ro2,area)
+  AsignarArea(ro3,area)
+  Iniciar(ro1,2,2)
+  Iniciar(ro2,5,5)
+  Iniciar(ro3,9,9)
+fin

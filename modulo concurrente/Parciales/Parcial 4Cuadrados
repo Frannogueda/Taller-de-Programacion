@@ -1,0 +1,95 @@
+programa parcial
+procesos  
+  proceso cuadrado(E lado:numero ES cant:numero)
+  variables
+    ca:numero
+  comenzar
+    ca:=PosCa
+    repetir 4
+      repetir lado
+        juntarFlores(cant)
+        mover
+      derecha
+    Pos(PosAv,ca+lado+1)
+  fin
+  proceso juntarFlores(ES cant:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      cant:=cant+1
+  fin
+  proceso depositarFlores(E cant:numero)
+  variables
+    av,ca:numero
+  comenzar
+    av:=PosAv
+    ca:=PosCa
+    repetir cant
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      si(HayFlorEnLaBolsa)
+        depositarFlor
+      Pos(av,ca)
+      LiberarEsquina(50,50)
+  fin
+  proceso recolectarFlores(E cant:numero)
+  comenzar
+    repetir cant
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      si(HayFlorEnLaEsquina)
+        tomarFlor
+      Pos(100,100)
+      LiberarEsquina(50,50)
+  fin
+areas
+  a1:AreaP(1,1,9,30)
+  a2:AreaP(10,1,19,30)
+  a3:AreaP(20,1,29,30)
+  deposito:AreaC(50,50,50,50)
+  jefeA:AreaP(100,100,100,100)
+robots
+  robot r1
+  variables
+    lado,cant:numero
+  comenzar
+    RecibirMensaje(lado,jefe)
+    repetir 4
+      cant:=0
+      cuadrado(lado,cant)
+      depositarFlores(cant)
+      EnviarMensaje(cant,jefe)
+  fin
+  robot jefesito
+  variables
+    total,lado,cant:numero
+  comenzar
+    total:=0
+    Random(lado,2,6)
+    EnviarMensaje(lado,robot1)
+    Random(lado,2,6)
+    EnviarMensaje(lado,robot2)
+    Random(lado,2,6)
+    EnviarMensaje(lado,robot3)
+    repetir 12
+      RecibirMensaje(cant,*)
+      total:=total+cant
+      recolectarFlores(cant)
+    Informar(total)
+  fin
+variables
+  robot1,robot2,robot3:r1 jefe:jefesito
+comenzar
+  AsignarArea(robot1,a1)
+  AsignarArea(robot1,deposito)
+  AsignarArea(robot2,a2)
+  AsignarArea(robot2,deposito)
+  AsignarArea(robot3,a3)
+  AsignarArea(robot3,deposito)
+  AsignarArea(jefe,deposito)
+  AsignarArea(jefe,jefeA)
+  Iniciar(robot1,1,1)
+  Iniciar(robot2,10,1)
+  Iniciar(robot3,20,1)
+  Iniciar(jefe,100,100)
+fin

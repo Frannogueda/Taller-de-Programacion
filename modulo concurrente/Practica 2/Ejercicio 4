@@ -1,0 +1,85 @@
+programa ejercicio
+procesos
+  proceso florYpapel(ES cant:numero)
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      cant:=cant+1
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      cant:=cant+1
+  fin
+areas
+  cuadrante:AreaPC(25,25,75,75)
+  ArJefe:AreaP(1,1,1,1)
+  Arjuga:AreaP(25,1,40,1)
+robots  
+  robot jefesito
+  variables
+    max,maxR,num,cantidad:numero ok:boolean
+  comenzar
+    max:=0
+    maxR:=0
+    ok:=V
+    EnviarMensaje(1,robot1)
+    EnviarMensaje(2,robot2)
+    EnviarMensaje(3,robot3)
+    EnviarMensaje(4,robot4)
+    repetir 10
+      Random(num,1,4)
+      EnviarMensaje(num,robot1)
+      EnviarMensaje(num,robot2)
+      EnviarMensaje(num,robot3)
+      EnviarMensaje(num,robot4)
+      RecibirMensaje(cantidad,*)
+      si(cantidad>max)
+        max:=cantidad
+        maxR:=num
+    EnviarMensaje(maxR,robot1)
+    EnviarMensaje(maxR,robot2)
+    EnviarMensaje(maxR,robot3)
+    EnviarMensaje(maxR,robot4)
+  fin
+  robot r1
+  variables
+    calle,avenida,calleO,avenidaO,cant,id,Rid,total,ok:numero
+  comenzar
+    total:=0
+    cant:=0
+    calleO:=PosCa
+    avenidaO:=PosAv
+    RecibirMensaje(id,jefe)
+    repetir 10
+      RecibirMensaje(Rid,jefe)
+      si(Rid=id)
+        Random(avenida,25,75)
+        Random(calle,25,75)
+        Pos(avenida,calle)
+        florYpapel(cant)
+        total:=total+cant
+        Pos(avenidaO,calleO)
+        EnviarMensaje(total,jefe)
+    RecibirMensaje(Rid,jefe)
+    si(Rid=id)
+      Pos(50,50)
+    sino
+      Pos(avenidaO,calleO)
+  fin
+variables
+  robot1,robot2,robot3,robot4:r1 jefe:jefesito
+comenzar
+  AsignarArea(robot1,cuadrante)
+  AsignarArea(robot1,Arjuga)
+  AsignarArea(robot2,cuadrante)
+  AsignarArea(robot2,Arjuga)
+  AsignarArea(robot3,cuadrante)
+  AsignarArea(robot3,Arjuga)
+  AsignarArea(robot4,cuadrante)
+  AsignarArea(robot4,Arjuga)
+  AsignarArea(jefe,ArJefe)
+  Iniciar(robot1,25,1)
+  Iniciar(robot2,30,1)
+  Iniciar(robot3,35,1)
+  Iniciar(robot4,40,1)
+  Iniciar(jefe,1,1)
+fin

@@ -1,0 +1,77 @@
+programa ejercicio
+procesos
+  proceso juntarFlores
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+  proceso juntarPapeles
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+  fin
+  proceso DejarFlores
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      depositarFlor
+  fin
+  proceso DejarPapeles
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      depositarPapel
+  fin
+areas  
+  area:AreaPC(1,1,10,10)
+robots
+  robot rF
+  variables
+    cO,aO,c,a:numero
+  comenzar
+    cO:= PosCa
+    aO:=PosAv
+    repetir 5
+      Random(c,1,10)
+      Random(a,1,5)
+      BloquearEsquina(a,c)
+      Pos(a,c)
+      juntarFlores
+      Pos(aO,cO)
+      LiberarEsquina(a,c)
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    DejarFlores
+    Pos(aO,cO)
+    LiberarEsquina(10,10)
+  fin
+  robot rP
+  variables
+    cO,aO,c,a:numero
+  comenzar
+    cO:=PosCa
+    aO:=PosAv
+    repetir 3
+      Random(a,6,10)
+      Random(c,1,9)
+      BloquearEsquina(a,c)
+      Pos(a,c)
+      juntarPapeles
+      Pos(aO,cO)
+      LiberarEsquina(a,c)
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    DejarPapeles
+    Pos(aO,cO)
+    LiberarEsquina(10,10)
+  fin
+variables
+  rob1,rob2:rF P1,P2:rP
+comenzar
+  AsignarArea(rob1,area)
+  AsignarArea(rob2,area)
+  AsignarArea(P1,area)
+  AsignarArea(P2,area)
+  Iniciar(rob1,6,10)
+  Iniciar(rob2,7,10)
+  Iniciar(P1,8,10)
+  Iniciar(P2,9,10)
+fin

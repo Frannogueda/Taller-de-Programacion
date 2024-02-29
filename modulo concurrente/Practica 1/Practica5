@@ -1,0 +1,58 @@
+programa practica
+procesos
+  proceso depositarFlores
+  comenzar
+    mientras(HayFlorEnLaBolsa)
+      depositarFlor
+  fin
+  proceso depositarPapeles
+  comenzar
+    mientras(HayPapelEnLaBolsa)
+      depositarPapel
+  fin
+  proceso limpiarCalle(E avenida:numero E calle:numero)
+  comenzar
+    Pos(avenida,calle)
+    repetir 15
+      si(HayFlorEnLaEsquina)
+        mientras(HayFlorEnLaEsquina)
+          tomarFlor
+      mover
+  fin
+  proceso limpiarAvenida(E avenida:numero E calle:numero)
+  comenzar
+    Pos(avenida,calle)
+    repetir 15
+      si(HayPapelEnLaEsquina)
+        mientras(HayPapelEnLaEsquina)
+          tomarPapel
+      mover
+  fin
+areas
+  ciudad:AreaC(1,1,100,100)
+robots
+  robot r1
+  comenzar
+    derecha
+    limpiarCalle(PosAv,PosCa)
+    limpiarCalle(PosAv-15,PosCa-5)
+    depositarFlores
+  fin
+  robot r2
+  comenzar
+    limpiarAvenida(PosAv,PosCa)
+    limpiarAvenida(PosAv+5,PosCa-15)
+    depositarPapeles
+  fin
+variables
+  rob1,rob3:r1 rob2,rob4:r2
+comenzar
+  AsignarArea(rob1,ciudad)
+  AsignarArea(rob3,ciudad)
+  AsignarArea(rob2,ciudad)
+  AsignarArea(rob4,ciudad)
+  Iniciar(rob1,1,80)
+  Iniciar(rob2,10,1)
+  Iniciar(rob3,70,15)
+  Iniciar(rob4,75,80)
+fin
